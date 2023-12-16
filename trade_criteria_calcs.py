@@ -1,0 +1,26 @@
+from api_calls import closing_bars, hourly_close_bars
+
+symbol = 'TSLA'
+      
+def stocks_last_fiveday_avg_close():
+    closing_prices_stocks = closing_bars()
+    sum_closing_prices= closing_prices_stocks['close'].iloc[-5:].sum()
+    daily_average = sum_closing_prices/5
+    return float(round(daily_average,2))    
+
+def stocks_last_hours_close():
+    current_price_stocks = hourly_close_bars()
+    return float(current_price_stocks)
+
+def stocks_trade_criteria():
+    last_five = float(stocks_last_fiveday_avg_close())
+    print(last_five)
+    last_hour = float(stocks_last_hours_close())
+    print(last_hour)
+    difference = last_hour - last_five
+    if last_five < last_hour and difference <= 2.00:
+        return True
+    else:
+        return False
+    
+#stocks_trade_criteria()
